@@ -1,0 +1,15 @@
+{
+  "name": "node-putcast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Taylor <nizmox@gmail.com> (https://github.com/s-taylor)",
+  "license": "ISC",
+  "dependencies": {
+    "put.io-v2": "0.0.2",
+    "q": "^1.3.0"
+  }
+}
