@@ -1,7 +1,9 @@
 var Q = require('q');
+var moment = require('moment');
 var PutIO = require('put.io-v2');
 
-var api = new PutIO("");
+var token = process.env.token;
+var api = new PutIO(token);
 
 var flattenFiles = function(api) {
 	var page = 1;
@@ -15,7 +17,6 @@ var flattenFiles = function(api) {
 			if (result.next !== '') return fetchFiles(api, ++page);
 			return files;
 		})
-		//.done(function() { console.log('files', files) })
 }
 
 var fetchFiles = function(api, page) {
@@ -28,14 +29,25 @@ var fetchFiles = function(api, page) {
 	return defer.promise;
 }
 
-var filterFiles = function(files) {
-	console.log('im here!')
-	return files.filter(function(file) {
+var filterFiles = function(minSize, createdAfter, files) {
+	console.log('files before filter',files)
+	return files.files.filter(function(file) {
+		//exclude folders
 		if (file.content_type === 'application/x-directory') return false;
+		//exclude files below a specified file size
+		if (minSize && file.size < minSize) return false;
+		//exclude files created before
+		if (createdAfter) {
+			var createdAt = moment(file.created_at)
+			if (createdAt.isBefore(createdAfter)) return false;
+		}
 		return true;
-	});
+	})
 }
 
 flattenFiles(api)
-	//.then(filterFiles)
-	.done(function(files) { console.log(files) });
+	.then(filterFiles.bind(this, 100000, "2015-05-10"))
+	.done(function(files) { 
+		//console.log(files) 
+		//console.log('file count after filter', files.length)
+	});
