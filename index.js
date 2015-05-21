@@ -24,14 +24,15 @@ var fetchFiles = function(api, page) {
 	console.log('fetching files for page', page);
 	api.files.search('from: "all"', page, function(result) {
 		console.log(result.files.length + '', 'files found on page', page + '');
-		defer.resolve(result);
+		//console.log('result from fetchFiles', result)
+		defer.resolve(result.files);
 	});
 	return defer.promise;
 }
 
 var filterFiles = function(minSize, createdAfter, files) {
-	console.log('files before filter',files)
-	return files.files.filter(function(file) {
+	//console.log('files before filter',files)
+	return files.filter(function(file) {
 		//exclude folders
 		if (file.content_type === 'application/x-directory') return false;
 		//exclude files below a specified file size
@@ -48,6 +49,6 @@ var filterFiles = function(minSize, createdAfter, files) {
 flattenFiles(api)
 	.then(filterFiles.bind(this, 100000, "2015-05-10"))
 	.done(function(files) { 
-		//console.log(files) 
+		console.log('files after filter', files)
 		//console.log('file count after filter', files.length)
 	});
