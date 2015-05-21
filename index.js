@@ -25,7 +25,7 @@ var fetchFiles = function(api, page) {
 	api.files.search('from: "all"', page, function(result) {
 		console.log(result.files.length + '', 'files found on page', page + '');
 		//console.log('result from fetchFiles', result)
-		defer.resolve(result.files);
+		defer.resolve(result);
 	});
 	return defer.promise;
 }
