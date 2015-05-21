@@ -46,9 +46,16 @@ var filterFiles = function(minSize, createdAfter, files) {
 	})
 }
 
+var getDownloadLinks = function(files) {
+  console.log('files')
+  return files.map(function(file) { return api.files.download(file.id) })
+}
+
 flattenFiles(api)
-	.then(filterFiles.bind(this, 100000, "2015-05-10"))
-	.done(function(files) { 
-		console.log('files after filter', files)
-		//console.log('file count after filter', files.length)
+	.then(filterFiles.bind(this, 100000, false))
+	.then(getDownloadLinks)
+	.done(function(results) {
+    //console.log('download links', results)
+		var prettyPrint = results.join('\n');
+		console.log(prettyPrint)
 	});
