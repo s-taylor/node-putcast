@@ -65,7 +65,7 @@ var getFileNames = function(files) {
 }
 
 flattenFiles(api)
-	.then(filterFiles.bind(this, { minSize: 10000 }))
+	.then(filterFiles.bind(this, { minSize: 100000000 }))
 	.then(getFileNames)
 	//.then(getDownloadLinks)
 	.done(function(results) {
