@@ -60,9 +60,14 @@ var getDownloadLinks = function(files) {
   return files.map(function(file) { return api.files.download(file.id) })
 }
 
+var getFileNames = function(files) {
+  return files.map(function(file) { return file.name })
+}
+
 flattenFiles(api)
 	.then(filterFiles.bind(this, { minSize: 10000 }))
-	.then(getDownloadLinks)
+	.then(getFileNames)
+	//.then(getDownloadLinks)
 	.done(function(results) {
     //console.log('download links', results)
 		var prettyPrint = results.join('\n');
