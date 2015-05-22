@@ -9,14 +9,18 @@ var flattenFiles = function(api) {
 	var page = 1;
 	var files = [];
 
-	return fetchFiles(api, page)
-		.then(function(result) {
-			//append the files to the files array
-			files = files.concat(result.files);
-			//if there are more files, fetch these!
-			if (result.next !== '') return fetchFiles(api, ++page);
-			return files;
-		})
+  var loopFetchFiles = function(api, page) {
+    return fetchFiles(api, page)
+      .then(function(result) {
+        //append the files to the files array
+        files = files.concat(result.files);
+        //if there are more files, fetch these!
+        if (result.next !== '') return loopFetchFiles(api, ++page);
+        return files;
+      })
+  }
+
+  return loopFetchFiles(api, page);
 }
 
 var fetchFiles = function(api, page) {
@@ -47,7 +51,6 @@ var filterFiles = function(minSize, createdAfter, files) {
 }
 
 var getDownloadLinks = function(files) {
-  console.log('files')
   return files.map(function(file) { return api.files.download(file.id) })
 }
 
