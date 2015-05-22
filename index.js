@@ -9,6 +9,8 @@ var flattenFiles = function(api) {
 	var page = 1;
 	var files = [];
 
+  //recursively call fetch files for each page
+  //until no next page can be found (result.next)
   var loopFetchFiles = function(api, page) {
     return fetchFiles(api, page)
       .then(function(result) {
@@ -23,6 +25,7 @@ var flattenFiles = function(api) {
   return loopFetchFiles(api, page);
 }
 
+//fetch the files from a specified page
 var fetchFiles = function(api, page) {
 	var defer = Q.defer();
 	console.log('fetching files for page', page);
@@ -34,20 +37,23 @@ var fetchFiles = function(api, page) {
 	return defer.promise;
 }
 
-var filterFiles = function(minSize, createdAfter, files) {
+var filterFiles = function(opts, files) {
+  if (!opts) opts = {};
 	//console.log('files before filter',files)
-	return files.filter(function(file) {
+	var filtered = files.filter(function(file) {
 		//exclude folders
 		if (file.content_type === 'application/x-directory') return false;
 		//exclude files below a specified file size
-		if (minSize && file.size < minSize) return false;
+		if (opts.minSize && file.size < opts.minSize) return false;
 		//exclude files created before
-		if (createdAfter) {
+		if (opts.createdAfter) {
 			var createdAt = moment(file.created_at)
-			if (createdAt.isBefore(createdAfter)) return false;
+			if (createdAt.isBefore(opts.createdAfter)) return false;
 		}
 		return true;
 	})
+	console.log('files remaining after filter', filtered.length);
+	return filtered;
 }
 
 var getDownloadLinks = function(files) {
@@ -55,7 +61,7 @@ var getDownloadLinks = function(files) {
 }
 
 flattenFiles(api)
-	.then(filterFiles.bind(this, 100000, false))
+	.then(filterFiles.bind(this, { minSize: 10000 }))
 	.then(getDownloadLinks)
 	.done(function(results) {
     //console.log('download links', results)
