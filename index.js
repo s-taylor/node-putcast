@@ -64,10 +64,15 @@ var getFileNames = function(files) {
   return files.map(function(file) { return file.name })
 }
 
+var getNameAndLink = function(files) {
+  return files.map(function(file) { return file.name + " " + api.files.download(file.id)})
+}
+
 flattenFiles(api)
 	.then(filterFiles.bind(this, { minSize: 100000000 }))
-	.then(getFileNames)
-	//.then(getDownloadLinks)
+	//.then(getFileNames)
+  //.then(getDownloadLinks)
+  .then(getNameAndLink)
 	.done(function(results) {
     //console.log('download links', results)
 		var prettyPrint = results.join('\n');
