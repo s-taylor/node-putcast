@@ -9,6 +9,8 @@
   "author": "Simon Taylor <nizmox@gmail.com> (https://github.com/s-taylor)",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.12.4",
+    "jade": "^1.10.0",
     "moment": "^2.10.2",
     "put.io-v2": "0.0.2",
     "q": "^1.3.0"
