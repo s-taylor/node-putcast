@@ -30,7 +30,10 @@ app.get('/rss/:token', function (req, res) {
     })
 })
 
-app.listen(3000)
+//start server
+var port = process.env.PORT || 3000
+app.listen(port);
+console.log("Server started on port " + port);
 
 var getFullUrl = function(req) { 
   return req.protocol + '://' + req.get('host') + req.originalUrl;
