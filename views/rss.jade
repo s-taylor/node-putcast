@@ -1,0 +1,11 @@
+doctype xml
+rss(version='2.0')
+	channel
+		title put.io RSS feed
+		description a list of all files on your put.io account after filters applied
+		link feedUrl
+		for file in files
+			item
+				title=file.name
+				pubDate= file.created_at
+				link= file.download
