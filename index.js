@@ -6,7 +6,10 @@ var flatten = require('./lib/flatten.js')
 app.get('/html/:token', function (req, res) {
   var token = req.params.token;
   if (!token) throw new Error("oauth token not provided");
-  flatten(token, { minSize: 100000000 })
+  var opts = req.query;
+  //TODO - write function to sanitize query opts
+  if (opts.minSize) opts.minSize = parseInt(opts.minSize)
+  flatten(token, opts)
     .then(function(result) {
       //console.log('result', result)
       var view = __dirname + '/views/html.jade';
@@ -19,7 +22,10 @@ app.get('/html/:token', function (req, res) {
 app.get('/rss/:token', function (req, res) {
   var token = req.params.token;
   if (!token) throw new Error("oauth token not provided");
-  flatten(token, { minSize: 100000000 })
+  var opts = req.query;
+  //TODO - write function to sanitize query opts
+  if (opts.minSize) opts.minSize = parseInt(opts.minSize)
+  flatten(token, opts)
     .then(function(result) {
       //console.log('result', result)
       var view = __dirname + '/views/rss.jade';
