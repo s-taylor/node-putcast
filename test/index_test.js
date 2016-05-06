@@ -44,7 +44,7 @@ describe("test", function() {
 
   describe("server", function() {
     describe("rss feed", function() {
-      it("test RSS feed", function() {
+      it("must return the expected number of files", function() {
         var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
 
         return parseRss(RSS_URL)
