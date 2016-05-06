@@ -1,4 +1,3 @@
-var _ = require("lodash");
 var Fs = require('fs');
 var Nock = require("nock");
 var parse = require("parse-rss");
