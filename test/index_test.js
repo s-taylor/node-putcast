@@ -1,7 +1,16 @@
 var _ = require("lodash");
 var Fs = require('fs');
 var Nock = require("nock");
-var parseRss = require("parse-rss");
+var parse = require("parse-rss");
+
+var parseRss = function(url) {
+  return new Promise(function(resolve, reject) {
+    return parse(url, function(err, rss) {
+      if (err) return reject(err);
+      return resolve(rss);
+    });
+  });
+}
 
 var TOKEN = 'ABCD1234';
 var LOCALHOST = 'http://localhost:3000';
@@ -35,13 +44,13 @@ describe("test", function() {
 
   describe("server", function() {
     describe("rss feed", function() {
-      it("test RSS feed", function(done) {
+      it("test RSS feed", function() {
         var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
 
-        parseRss(RSS_URL, function(err, rss) {
-          rss.length.must.equal(30);
-          done();
-        });
+        return parseRss(RSS_URL)
+          .then(function(rss) {
+            rss.length.must.equal(30);
+          })
       });
     });
   });
