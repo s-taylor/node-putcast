@@ -1,0 +1,73 @@
+{
+  "files": [
+    {
+      "content_type": "video/x-matroska", 
+      "crc32": "88e8c215", 
+      "created_at": "2016-04-30T14:24:38", 
+      "extension": "mkv", 
+      "file_type": 3, 
+      "first_accessed_at": "2016-04-30T14:25:37", 
+      "icon": "https://api.put.io/thumbnails/YVqWZpRhX4ppWFyRXZldaGNhV5GLVpJYapFllo%2BKYFhekV1rkpFlYQ%3D%3D.jpg", 
+      "id": 399838855, 
+      "is_mp4_available": true, 
+      "is_shared": false, 
+      "name": "The.Mindy.Project.S04E16.HDTV.x264-KILLERS.mkv", 
+      "opensubtitles_hash": "7c085a767f800836", 
+      "parent_id": 399838854, 
+      "screenshot": "https://api.put.io/screenshots/YVqWZpRhX4ppWFyRXZldaGNhV5GLVpJYapFllo%2BKYFhekV1rkpFlYQ%3D%3D.jpg", 
+      "size": 182314706
+    }, 
+    {
+      "content_type": "text/plain", 
+      "crc32": "ac22013f", 
+      "created_at": "2016-04-30T14:24:38", 
+      "extension": "txt", 
+      "file_type": 8, 
+      "first_accessed_at": null, 
+      "icon": "https://api.put.io/images/file_types/text.png", 
+      "id": 399838856, 
+      "is_mp4_available": false, 
+      "is_shared": false, 
+      "name": "RARBG.com.txt", 
+      "opensubtitles_hash": null, 
+      "parent_id": 399838854, 
+      "screenshot": null, 
+      "size": 34
+    }, 
+    {
+      "content_type": "text/plain", 
+      "crc32": "4f3d89d7", 
+      "created_at": "2016-04-30T14:24:38", 
+      "extension": "nfo", 
+      "file_type": 8, 
+      "first_accessed_at": null, 
+      "icon": "https://api.put.io/images/file_types/text.png", 
+      "id": 399838857, 
+      "is_mp4_available": false, 
+      "is_shared": false, 
+      "name": "the.mindy.project.s04e16.hdtv.x264-killers.nfo", 
+      "opensubtitles_hash": null, 
+      "parent_id": 399838854, 
+      "screenshot": null, 
+      "size": 10863
+    }
+  ], 
+  "parent": {
+    "content_type": "application/x-directory", 
+    "crc32": null, 
+    "created_at": "2016-04-30T14:24:38", 
+    "extension": null, 
+    "file_type": 0, 
+    "first_accessed_at": null, 
+    "icon": "https://api.put.io/images/file_types/folder.png", 
+    "id": 399838854, 
+    "is_mp4_available": false, 
+    "is_shared": false, 
+    "name": "The.Mindy.Project.S04E16.HDTV.x264-KILLERS[rarbg]", 
+    "opensubtitles_hash": null, 
+    "parent_id": 0, 
+    "screenshot": null, 
+    "size": 182325603
+  }, 
+  "status": "OK"
+}

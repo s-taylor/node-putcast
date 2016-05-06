@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "content_type": "text/plain", 
+      "crc32": "4e81fa5e", 
+      "created_at": "2016-04-29T16:01:23", 
+      "extension": "srt", 
+      "file_type": 8, 
+      "first_accessed_at": null, 
+      "icon": "https://api.put.io/images/file_types/text.png", 
+      "id": 399656545, 
+      "is_mp4_available": false, 
+      "is_shared": false, 
+      "name": "subs.srt", 
+      "opensubtitles_hash": null, 
+      "parent_id": 399656542, 
+      "screenshot": null, 
+      "size": 64003
+    }
+  ], 
+  "parent": {
+    "content_type": "application/x-directory", 
+    "crc32": null, 
+    "created_at": "2016-04-29T16:01:23", 
+    "extension": null, 
+    "file_type": 0, 
+    "first_accessed_at": null, 
+    "icon": "https://api.put.io/images/file_types/folder.png", 
+    "id": 399656542, 
+    "is_mp4_available": false, 
+    "is_shared": false, 
+    "name": "Subs", 
+    "opensubtitles_hash": null, 
+    "parent_id": 399656539, 
+    "screenshot": null, 
+    "size": 64003
+  }, 
+  "status": "OK"
+}

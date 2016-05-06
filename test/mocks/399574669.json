@@ -1,0 +1,73 @@
+{
+  "files": [
+    {
+      "content_type": "video/x-matroska", 
+      "crc32": "0b1d33de", 
+      "created_at": "2016-04-29T05:17:15", 
+      "extension": "mkv", 
+      "file_type": 3, 
+      "first_accessed_at": "2016-04-29T05:22:04", 
+      "icon": "https://api.put.io/thumbnails/YlVlYmBoY4yWWlpnXpZgZJWQW5SHiGlclpGRYGJXZFuJYVyaj5ViYA%3D%3D.jpg", 
+      "id": 399574670, 
+      "is_mp4_available": true, 
+      "is_shared": false, 
+      "name": "Orphan.Black.S04E03.HDTV.x264-KILLERS.mkv", 
+      "opensubtitles_hash": "fe622b9854134df8", 
+      "parent_id": 399574669, 
+      "screenshot": "https://api.put.io/screenshots/YlVlYmBoY4yWWlpnXpZgZJWQW5SHiGlclpGRYGJXZFuJYVyaj5ViYA%3D%3D.jpg", 
+      "size": 273151148
+    }, 
+    {
+      "content_type": "text/plain", 
+      "crc32": "ac22013f", 
+      "created_at": "2016-04-29T05:17:15", 
+      "extension": "txt", 
+      "file_type": 8, 
+      "first_accessed_at": null, 
+      "icon": "https://api.put.io/images/file_types/text.png", 
+      "id": 399574671, 
+      "is_mp4_available": false, 
+      "is_shared": false, 
+      "name": "RARBG.com.txt", 
+      "opensubtitles_hash": null, 
+      "parent_id": 399574669, 
+      "screenshot": null, 
+      "size": 34
+    }, 
+    {
+      "content_type": "text/plain", 
+      "crc32": "67795d25", 
+      "created_at": "2016-04-29T05:17:15", 
+      "extension": "nfo", 
+      "file_type": 8, 
+      "first_accessed_at": null, 
+      "icon": "https://api.put.io/images/file_types/text.png", 
+      "id": 399574672, 
+      "is_mp4_available": false, 
+      "is_shared": false, 
+      "name": "orphan.black.s04e03.hdtv.x264-killers.nfo", 
+      "opensubtitles_hash": null, 
+      "parent_id": 399574669, 
+      "screenshot": null, 
+      "size": 10858
+    }
+  ], 
+  "parent": {
+    "content_type": "application/x-directory", 
+    "crc32": null, 
+    "created_at": "2016-04-29T05:17:15", 
+    "extension": null, 
+    "file_type": 0, 
+    "first_accessed_at": null, 
+    "icon": "https://api.put.io/images/file_types/folder.png", 
+    "id": 399574669, 
+    "is_mp4_available": false, 
+    "is_shared": false, 
+    "name": "Orphan.Black.S04E03.HDTV.x264-KILLERS[rarbg]", 
+    "opensubtitles_hash": null, 
+    "parent_id": 0, 
+    "screenshot": null, 
+    "size": 273162040
+  }, 
+  "status": "OK"
+}

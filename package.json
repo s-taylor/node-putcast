@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/.bin/mocha"
   },
   "author": "Simon Taylor <nizmox@gmail.com> (https://github.com/s-taylor)",
   "license": "ISC",
@@ -19,5 +19,11 @@
   },
   "engines": {
     "node": "0.12.4"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "must": "^0.13.1",
+    "nock": "^8.0.0",
+    "parse-rss": "^1.0.3"
   }
 }
