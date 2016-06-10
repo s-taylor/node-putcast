@@ -39,7 +39,7 @@ describe("test", function() {
   });
 
   // setup Nock mock API server
-  before(function(done) {
+  before(function() {
     var nock = Nock(URL);
     var files = Fs.readdirSync(MOCK_PATH);
 
@@ -52,7 +52,6 @@ describe("test", function() {
       //TODO - can this just be permanent?
       nock.get(PATH).query(queryStr).times(100).reply(200, json);
     });
-    return done();
   });
 
   // setup node-putcast
