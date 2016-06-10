@@ -69,13 +69,13 @@ describe("test", function() {
       });
 
       it("must return the expected files", function() {
-        var fileNames = _.pluck(apiFiles, 'name').sort();
+        var expected = _.pluck(apiFiles, 'name').sort();
 
         var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
         return parseRss(RSS_URL)
           .then(function(rss) {
             var titles = _.pluck(rss, "title").sort();
-            titles.must.eql(fileNames);
+            titles.must.eql(expected);
           })
       })
 
