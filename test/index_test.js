@@ -78,6 +78,20 @@ describe("test", function() {
             titles.must.eql(fileNames);
           })
       })
+
+      it("must return the download links", function() {
+        var apiFileLinks = apiFiles.map(file => {
+          return URL + '/v2/files/' + file.id + '/download?oauth_token=' + TOKEN;
+        })
+        var expected = apiFileLinks.sort();
+
+        var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
+        return parseRss(RSS_URL)
+          .then(function(rss) {
+            var links = _.pluck(rss, "link").sort();
+            links.must.eql(expected);
+          })
+      });
     });
   });
 });
