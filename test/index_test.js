@@ -12,7 +12,7 @@ var parseRss = function(url) {
   });
 }
 
-var isFile = (obj) => obj['content_type'] !== "application/x-directory";
+var isFile = (obj) => obj.content_type !== "application/x-directory";
 
 var TOKEN = 'ABCD1234';
 var LOCALHOST = 'http://localhost:3000';
@@ -27,6 +27,7 @@ describe("test", function() {
   let apiContents = [];
   let apiFiles = [];
 
+  // read json files and setup apiContents / apiFiles
   before(function() {
     var files = Fs.readdirSync(MOCK_PATH);
 
