@@ -1,3 +1,4 @@
+var _ = require("lodash");
 var Fs = require('fs');
 var Nock = require("nock");
 var parse = require("parse-rss");
@@ -11,6 +12,8 @@ var parseRss = function(url) {
   });
 }
 
+var isFile = (obj) => obj['content_type'] !== "application/x-directory";
+
 var TOKEN = 'ABCD1234';
 var LOCALHOST = 'http://localhost:3000';
 
@@ -21,6 +24,20 @@ var FULL_URL = URL + PATH;
 var MOCK_PATH = __dirname + '/mocks/';
 
 describe("test", function() {
+  let apiContents = [];
+  let apiFiles = [];
+
+  before(function() {
+    var files = Fs.readdirSync(MOCK_PATH);
+
+    files.forEach(function(filename) {
+      var contents = Fs.readFileSync(MOCK_PATH + filename, 'utf-8');
+      var json = JSON.parse(contents);
+      apiContents = apiContents.concat(json.files);
+    });
+    apiFiles = apiContents.filter(isFile);
+  });
+
   // setup Nock mock API server
   before(function(done) {
     var nock = Nock(URL);
@@ -31,7 +48,7 @@ describe("test", function() {
       var parentId = filename.split('.')[0];
 
       var queryStr = {parent_id: parentId, oauth_token: TOKEN};
-      console.log(FULL_URL + "?oauth_token=" + TOKEN + "&parent_id=" + parentId);
+      //console.log(FULL_URL + "?oauth_token=" + TOKEN + "&parent_id=" + parentId);
       //TODO - can this just be permanent?
       nock.get(PATH).query(queryStr).times(100).reply(200, json);
     });
@@ -48,9 +65,20 @@ describe("test", function() {
 
         return parseRss(RSS_URL)
           .then(function(rss) {
-            rss.length.must.equal(30);
+            rss.length.must.eql(apiFiles.length);
           })
       });
+
+      it("must return the expected files", function() {
+        var fileNames = _.pluck(apiFiles, 'name').sort();
+
+        var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
+        return parseRss(RSS_URL)
+          .then(function(rss) {
+            var titles = _.pluck(rss, "title").sort();
+            titles.must.eql(fileNames);
+          })
+      })
     });
   });
 });
