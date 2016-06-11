@@ -1,97 +1,102 @@
-var _ = require("lodash");
-var Fs = require('fs');
-var Nock = require("nock");
-var parse = require("parse-rss");
+const _ = require('lodash');
+const Fs = require('fs');
+const Nock = require('nock');
+const parse = require('parse-rss');
 
-var parseRss = function(url) {
-  return new Promise(function(resolve, reject) {
-    return parse(url, function(err, rss) {
+function parseRss(url) {
+  return new Promise((resolve, reject) =>
+    parse(url, (err, rss) => {
       if (err) return reject(err);
       return resolve(rss);
-    });
-  });
+    })
+  );
 }
 
-var isFile = (obj) => obj.content_type !== "application/x-directory";
+const isFile = (obj) => obj.content_type !== 'application/x-directory';
 
-var TOKEN = 'ABCD1234';
-var LOCALHOST = 'http://localhost:3000';
+const TOKEN = 'ABCD1234';
+const LOCALHOST = 'http://localhost:3000';
 
-var URL = 'https://api.put.io';
-var PATH = '/v2/files/list';
-var FULL_URL = URL + PATH;
+const URL = 'https://api.put.io';
+const PATH = '/v2/files/list';
 
-var MOCK_PATH = __dirname + '/mocks/';
+const MOCK_PATH = `${__dirname}/mocks/`;
 
-describe("test", function() {
+describe('test', () => {
   let apiContents = [];
   let apiFiles = [];
 
   // read json files and setup apiContents / apiFiles
-  before(function() {
-    var files = Fs.readdirSync(MOCK_PATH);
+  before(() => {
+    const files = Fs.readdirSync(MOCK_PATH);
 
-    files.forEach(function(filename) {
-      var contents = Fs.readFileSync(MOCK_PATH + filename, 'utf-8');
-      var json = JSON.parse(contents);
+    files.forEach(filename => {
+      const contents = Fs.readFileSync(MOCK_PATH + filename, 'utf-8');
+      const json = JSON.parse(contents);
       apiContents = apiContents.concat(json.files);
     });
     apiFiles = apiContents.filter(isFile);
   });
 
   // setup Nock mock API server
-  before(function() {
-    var nock = Nock(URL);
-    var files = Fs.readdirSync(MOCK_PATH);
+  before(() => {
+    const nock = Nock(URL);
+    const files = Fs.readdirSync(MOCK_PATH);
 
-    files.forEach(function(filename) {
-      var json = Fs.readFileSync(MOCK_PATH + filename);
-      var parentId = filename.split('.')[0];
+    files.forEach((filename) => {
+      const json = Fs.readFileSync(MOCK_PATH + filename);
+      const parentId = filename.split('.')[0];
 
-      var queryStr = {parent_id: parentId, oauth_token: TOKEN};
-      //console.log(FULL_URL + "?oauth_token=" + TOKEN + "&parent_id=" + parentId);
-      //TODO - can this just be permanent?
-      nock.get(PATH).query(queryStr).times(100).reply(200, json);
+      const queryStr = { parent_id: parentId, oauth_token: TOKEN };
+      //console.log(FULL_URL + '?oauth_token=' + TOKEN + '&parent_id=' + parentId);
+
+      nock
+      .get(PATH)
+      .query(queryStr)
+      // TODO - is there a way to make this unlimited?
+      .times(100)
+      .reply(200, json);
     });
   });
 
   // setup node-putcast
-  before(function() { require("../index"); });
+  // TODO - this should use a function to start the server
+  before(() => require('../index'));
 
-  describe("server", function() {
-    describe("rss feed", function() {
-      it("must return the expected number of files", function() {
-        var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
+  describe('server', () => {
+    describe('rss feed', () => {
+      it('must return the expected number of files', () => {
+        const RSS_URL = `${LOCALHOST}/rss/${TOKEN}`;
 
         return parseRss(RSS_URL)
-          .then(function(rss) {
-            rss.length.must.eql(apiFiles.length);
-          })
+        .then(rss => {
+          rss.length.must.eql(apiFiles.length);
+        });
       });
 
-      it("must return the expected files", function() {
-        var expected = _.pluck(apiFiles, 'name').sort();
+      it('must return the expected files', () => {
+        const expected = _.pluck(apiFiles, 'name').sort();
 
-        var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
+        const RSS_URL = `${LOCALHOST}/rss/${TOKEN}`;
         return parseRss(RSS_URL)
-          .then(function(rss) {
-            var titles = _.pluck(rss, "title").sort();
-            titles.must.eql(expected);
-          })
-      })
+        .then(rss => {
+          const titles = _.pluck(rss, 'title').sort();
+          titles.must.eql(expected);
+        });
+      });
 
-      it("must return the download links", function() {
-        var apiFileLinks = apiFiles.map(file => {
-          return URL + '/v2/files/' + file.id + '/download?oauth_token=' + TOKEN;
-        })
-        var expected = apiFileLinks.sort();
+      it('must return the download links', () => {
+        const apiFileLinks = apiFiles.map(file =>
+          `${URL}/v2/files/${file.id}/download?oauth_token=${TOKEN}`
+        );
+        const expected = apiFileLinks.sort();
 
-        var RSS_URL = LOCALHOST + '/rss/' + TOKEN;
+        const RSS_URL = `${LOCALHOST}/rss/${TOKEN}`;
         return parseRss(RSS_URL)
-          .then(function(rss) {
-            var links = _.pluck(rss, "link").sort();
-            links.must.eql(expected);
-          })
+        .then(rss => {
+          const links = _.pluck(rss, 'link').sort();
+          links.must.eql(expected);
+        });
       });
     });
   });
