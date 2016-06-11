@@ -13,6 +13,8 @@ function parseRss(url) {
 }
 
 const isFile = (obj) => obj.content_type !== 'application/x-directory';
+const getLink = (url, token) => fileId =>
+  `${url}/v2/files/${fileId}/download?oauth_token=${token}`;
 
 const TOKEN = 'ABCD1234';
 const LOCALHOST = 'http://localhost:3000';
@@ -86,9 +88,7 @@ describe('test', () => {
       });
 
       it('must return the download links', () => {
-        const apiFileLinks = apiFiles.map(file =>
-          `${URL}/v2/files/${file.id}/download?oauth_token=${TOKEN}`
-        );
+        const apiFileLinks = _.pluck(apiFiles, 'id').map(getLink(URL, TOKEN));
         const expected = apiFileLinks.sort();
 
         const RSS_URL = `${LOCALHOST}/rss/${TOKEN}`;
