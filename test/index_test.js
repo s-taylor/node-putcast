@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Fs = require('fs');
 const Nock = require('nock');
 const parse = require('parse-rss');
+const Querystring = require('querystring');
 
 function parseRss(url) {
   return new Promise((resolve, reject) =>
@@ -15,6 +16,7 @@ function parseRss(url) {
 const isFile = (obj) => obj.content_type !== 'application/x-directory';
 const getLink = (url, token) => fileId =>
   `${url}/v2/files/${fileId}/download?oauth_token=${token}`;
+const linkRegex = /^https:\/\/api.put.io\/v2\/files\/([0-9]{9})\/download\?oauth_token=[A-Z|0-9]{8}$/;
 
 const TOKEN = 'ABCD1234';
 const LOCALHOST = 'http://localhost:3000';
@@ -97,6 +99,27 @@ describe('test', () => {
           const links = _.pluck(rss, 'link').sort();
           links.must.eql(expected);
         });
+      });
+
+      it('must filter files below the minimum size', () => {
+        const minSize = 100000;
+        const filtered = apiFiles.filter(file => file.size > minSize);
+        const expected = _.pluck(filtered, 'id').sort();
+
+        const queryStr = Querystring.stringify({ minSize });
+        const RSS_URL = `${LOCALHOST}/rss/${TOKEN}?${queryStr}`;
+        return parseRss(RSS_URL)
+        .then(rss => {
+          const ids = rss.map(file => file.link.match(linkRegex)[1]);
+          const idNumbers = ids.map(Number).sort();
+          idNumbers.must.eql(expected);
+        });
+      });
+
+      it('must filter files created before the specified date', () => {
+      });
+
+      it('must return appropriate errors', () => {
       });
     });
   });
