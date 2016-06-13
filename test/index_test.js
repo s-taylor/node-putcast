@@ -3,6 +3,7 @@ const Fs = require('fs');
 const Nock = require('nock');
 const parse = require('parse-rss');
 const Querystring = require('querystring');
+const server = require('../server');
 
 function parseRss(url) {
   return new Promise((resolve, reject) =>
@@ -65,7 +66,7 @@ describe('test', () => {
 
   // setup node-putcast
   // TODO - this should use a function to start the server
-  before(() => require('../index'));
+  before(() => server(3000));
 
   describe('server', () => {
     describe('rss feed', () => {
