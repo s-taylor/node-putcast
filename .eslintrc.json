@@ -10,6 +10,9 @@
     "react"
   ],
   "rules": {
+    "comma-dangle": ["error", "never"],
+    "no-console": "off",
+    "no-param-reassign": "off",
     "spaced-comment": "off",
     "space-before-function-paren": ["error", "never"] 
   }
