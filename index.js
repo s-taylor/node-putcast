@@ -12,7 +12,7 @@ app.get('/html/:token', (req, res) => {
   if (!token) throw new Error('oauth token not provided');
   const opts = req.query;
   //TODO - write function to sanitize query opts
-  if (opts.minSize) opts.minSize = parseInt(opts.minSize);
+  if (opts.minSize) opts.minSize = Number(opts.minSize);
   flatten(token, opts)
   .then((result) => {
     //console.log('result', result)
@@ -28,7 +28,7 @@ app.get('/rss/:token', (req, res) => {
   if (!token) throw new Error('oauth token not provided');
   const opts = req.query;
   //TODO - write function to sanitize query opts
-  if (opts.minSize) opts.minSize = parseInt(opts.minSize);
+  if (opts.minSize) opts.minSize = Number(opts.minSize);
   flatten(token, opts)
   .then((result) => {
     //console.log('result', result)

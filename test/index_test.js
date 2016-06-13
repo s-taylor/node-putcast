@@ -116,10 +116,10 @@ describe('test', () => {
         });
       });
 
-      it('must filter files created before the specified date', () => {
+      it.skip('must filter files created before the specified date', () => {
       });
 
-      it('must return appropriate errors', () => {
+      it.skip('must return appropriate errors', () => {
       });
     });
   });
