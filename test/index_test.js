@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const Fs = require('fs');
+const Moment = require('moment');
 const Nock = require('nock');
 const parse = require('parse-rss');
 const Querystring = require('querystring');
@@ -117,7 +118,21 @@ describe('test', () => {
         });
       });
 
-      it.skip('must filter files created before the specified date', () => {
+      it('must filter files created before the specified date', () => {
+        const createdAfter = '2016-04-30T00:00:00';
+        const filtered = apiFiles.filter(file =>
+          Moment(file.created_at).isAfter(Moment(createdAfter))
+        );
+        const expected = _.pluck(filtered, 'id').sort();
+
+        const queryStr = Querystring.stringify({ createdAfter });
+        const RSS_URL = `${LOCALHOST}/rss/${TOKEN}?${queryStr}`;
+        return parseRss(RSS_URL)
+        .then(rss => {
+          const ids = rss.map(file => file.link.match(linkRegex)[1]);
+          const idNumbers = ids.map(Number).sort();
+          idNumbers.must.eql(expected);
+        });
       });
 
       it.skip('must return appropriate errors', () => {
